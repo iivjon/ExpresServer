@@ -2,24 +2,52 @@
 
 <html>
     <head>
-        <title>Remontti apu</title>
+        <title>Remontti paja</title>
         
 
     </head>
 
     <body>
         <center>
-        <h1>Hello from node and express server!</h1>
+        <h1>Remontti paja</h1>
         <div id="sisältö"></div>
         </center>
 
         <script>
+
+            async function fetchData(){
             document.getElementById("sisältö").innerHTML = "<h3>Ladataan työntekijöitä..</h3>"
 
-            fetch("http://localhost:3500/api/tyontekijat")
-            .then (res => res.json())
-            .then(js => console.log(js))
+            var x = `<table><thead><th>Työntekijän nimi</th><th>Työntekijä ID</th></thead><body>`
 
+                try {
+                const response = await fetch("http://localhost:3500/api/tyontekijat")
+
+                const tyontekijadata = await response.json() //muuten json data => javascript muotoon
+
+                await tyontekijadata.map(t => { //loopataan läpi oliot, t on 1 työntekijä
+                    x += `<tr><td>${t.name}</td><td>${t.id}</td></tr>`
+                })
+                //Tauluko päätetään ja renderöidääm html elementtiin
+                x += `</body></table>`
+                document.getElementById("sisältö").innerHTML = x
+                //Virhe tilanteen hallinta
+            } catch (error){
+                console.log("Error flechin data:",error)
+            }
+                
+
+            }
+
+            fetchData()
+            //Tämä kohta toimii jos ei käytetä async toimintoa 
+
+
+           /*  fetch("http://localhost:3500/api/tyontekijat")
+            .then (res => res.json())
+            .then(js => console.log(js)) */
+
+           
 
 
         </script>
