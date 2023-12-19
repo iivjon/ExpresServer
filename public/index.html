@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Remontti apu</title>
+        
+
+    </head>
+
+    <body>
+        <center>
+        <h1>Hello from node and express server!</h1>
+        <div id="sisältö"></div>
+        </center>
+
+        <script>
+            document.getElementById("sisältö").innerHTML = "<h3>Ladataan työntekijöitä..</h3>"
+
+            fetch("http://localhost:3500/api/tyontekijat")
+            .then (res => res.json())
+            .then(js => console.log(js))
+
+
+
+        </script>
+
+
+    </body>
+</html>
